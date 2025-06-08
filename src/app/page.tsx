@@ -310,6 +310,12 @@ const send1 = async () => {
         {
           wich === "2" && er === 200 && (
             <div className="gap-5  h-full  rounded-2xl w-full z-10 grid grid-rows-2 lg:grid-cols-2 p-5 fade-in">
+              
+              <div className="mt-10 mx-auto w-full max-w-md p-6 bg-white/30 backdrop-blur-md rounded-xl shadow-md">
+          <h2 className="text-xl font-bold text-gray-800">คะเเนน</h2>
+          <p className="mt-2 text-gray-600">สอบรอบนี้คะเเนนเต็ม {ximax} คะเเนน!!</p>
+          
+        </div>
         <div className="mt-10 mx-auto w-full max-w-md p-6 bg-white/30 backdrop-blur-md rounded-xl shadow-md">
           <h2 className="text-xl font-bold text-gray-800">คะเเนน</h2>
           <p className="mt-2 text-gray-600">คะเเนนรอบนี้คุณได้ {Xi} คะเเนน!!</p>
@@ -440,7 +446,7 @@ const send1 = async () => {
                   <p className="text-gray-700">🆔 ID: {key}</p>
                   <p className="text-gray-700">🏆 ห้อง: {data.clas}</p>
                   <p className="text-gray-700">🏅 อันดับ: {data.rank}</p>
-                  <p className="text-gray-700">📊 คะแนน xi: {data.xi}</p>
+                  <p className="text-gray-700">📊 คะแนน xi: {data.xi} / {ximax}</p>
                   <p className="text-gray-700">📈 เปอร์เซ็นไทล์: {data.percentile}%</p>
                   <p className="text-gray-700">📉 Z-Score: {data.zscore}</p>
                 </div>
