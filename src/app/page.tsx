@@ -11,14 +11,12 @@ import MyResponsiveLineChart from "./components/dynachart";
 import CustomButton from "./components/Custombutton";
 import Link from "next/link";
 import DynamicBarChart from '@/app/components/DynamicBarChartProps';
-import { motion } from 'framer-motion';
 export default function Home() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const [showPopup, setShowPopup] = useState(false);
   const words = ["Physics", "Chem", "Biology", "Maths", "English", "Social", "History", "Geography"];
-  const [Classs, setClasss] = useState("");
   const [ID, setID] = useState("");
   const [Subject, setSubject] = useState("");
-  const [Tries, setTries] = useState("");
   const [XI, setXI] = useState([]);
   const [PERCENTILE, setPERCENTILE] = useState([]);
   const [XIPERCENT, setXIPERCENT] = useState([]);
@@ -35,6 +33,7 @@ export default function Home() {
   const [maxscore, setMaxscore] = useState("")
   const [minscore , setMinscore] = useState("")
   const [wich, setWhich] = useState("5");
+  const [wich1, setWhich1] = useState("");
   const [ximax, setXimax] = useState("")
   const [triestimes , settriestimes] = useState("")
   const  [trysubject , setTrysubject]= useState("")
@@ -42,10 +41,9 @@ export default function Home() {
   const [zoom, setZoom] = useState<number>(1);
   const [er , seter] = useState(0)
   const [count, setcount] = useState("")
-  const [choice, setChoice] = useState<string>('');
   const [ppl, setppl] = useState([]);
-  const [sortmethod ,setsortmethod] = useState("")
-
+  const [su , setsu] = useState([]);
+  const [whyclickhere,setwhyclickhere] = useState(0)
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSubject(e.target.value);
   };
@@ -96,22 +94,20 @@ type PersonWithName = {
   { score: 9, people: 2 },
   { score: 10, people: 7 },
 ])
-  const send = async () => {
-    console.log(Subject)
-    const classs:string = sanitizeInput(Classs);
+
+  const send = async (val : string) => {
+    setWhich1(val)
     const id:string = sanitizeInput(ID);
     const subject:string = sanitizeInput(Subject);
-    const tries:string = sanitizeInput(Tries);
-    if (!classs || !id || !subject || !tries || classs.trim() === "" || id.trim() === "" || subject.trim() === "" || tries.trim() === "") {
+    if (!id || subject.trim() === "" || id.trim() === "" || subject.trim() === "") {
       alert("Please fill in all fields.");
       return;
     }
     try {
     const res = await axios.post(`${apiUrl}/api/getdata1`, {
-      class: classs,
       id: id,
       subject: subject,
-      tries: tries,
+      tries: val,
       
   })
     if (res.status === 200) {
@@ -133,7 +129,6 @@ type PersonWithName = {
       setMaxscore(res.data.totals["max"])
       setMinscore(res.data.totals["min"])
       setStats(res.data.stats)
-      settriestimes(tries)
       setXimax(res.data.ximax)
       setTrysubject(subject)
       setcl(res.data.cl)
@@ -157,7 +152,42 @@ type PersonWithName = {
     alert('Unexpected error: ' + error);
   }
 }
+
     
+}
+const send1 = async () => {
+    
+    const id:string = sanitizeInput(ID);
+    const subject:string = sanitizeInput(Subject);
+    if (!id || subject.trim() === "" || id.trim() === "" || subject.trim() === "") {
+      alert("Please fill in all fields.");
+      return;
+    }
+    try {
+    const res = await axios.post(`${apiUrl}/api/getdata2`, {
+      id: id,
+      subject: subject,
+  })
+    if (res.status === 200) {
+      setsu(res.data.data)
+      setwhyclickhere(res.status)
+    } } catch (error) {
+    if (axios.isAxiosError(error)) {
+    if (error.response) {
+      alert(
+        `Because: ${(error.response.data.error)}}`
+      );
+    } else if (error.request) {
+      alert('No response received: ' + error.request);
+    } else {
+      alert('Request setup error: ' + error.message);
+    }
+
+  } else {
+    alert('Unexpected error: ' + error);
+  }
+}
+ 
 }
   return (
     <div className="p-4 bg-white text-black">
@@ -190,21 +220,8 @@ type PersonWithName = {
                 className="flex border-2 hover:border-slate-950 bg-slate-300 rounded-xl h-16 pl-4 pt-6 w-full transition duration-300"
               />
             </div>
-            <div className="relative flex h-16 w-full text-black">
-              <div className="absolute p-3 text-sm">
-                Class
-              </div>
-              <input
-                type="search"
-                className="flex border-2 hover:border-slate-950 bg-slate-300 rounded-xl h-16 w-full pl-4 pt-6  transition duration-300"
-                onChange={(e) => {setClasss(e.target.value);}}
-              />
-            </div>
           </div>
-        </div>
-        <div className="flex flex-row w-full h-full gap-5 text-black">
-          <div className="flex w-full h-full gap-4">
-            <div className="relative flex h-16 w-full">
+          <div className="relative flex h-16 w-full">
               <div className="absolute p-3 text-sm">
                 Subject
               </div>
@@ -221,20 +238,9 @@ type PersonWithName = {
                 <option value="eng">eng</option>
               </select>
             </div>
-            <div className="relative flex h-16 w-full">
-              <div className="absolute p-3 text-sm">
-                Examination No
-              </div>
-              <input
-                onChange={(e) => {setTries(e.target.value);}}
-                type="search"
-                className="flex border-2 hover:border-slate-950 bg-slate-300 rounded-xl h-16 pl-4 pt-6 w-full transition duration-300"
-              />
-            </div>
-          </div>
         </div>
         <button 
-        onClick={send}
+        onClick={send1}
         className="text-black justify-center items-center relative flex p-2 border-2 hover:border-slate-950 bg-slate-300 transition duration-300 rounded-xl h-24 md:w-60">
           
               
@@ -254,6 +260,14 @@ type PersonWithName = {
           <CustomButton label="Graph" variant="solid" onClick={() => setWhich("1")} now={wich} target="1"/>
           <CustomButton label="Total" variant="solid" onClick={() => setWhich("3")} now={wich} target="3"/>
           <CustomButton label="Board" variant="solid" onClick={() => setWhich("4")} now={wich} target="4"/>
+            
+            {whyclickhere === 200 &&(
+              <div className="mt-12 mb-4 overflow-auto w-1/2 lg:w-full">
+            <CustomButton label={"Cilck here เพื่อเลือกครั้งที่สอบ"} variant="solid" onClick={() => setShowPopup(true)}/>
+          </div>
+            )
+            }
+          
         {
           wich === "1" && er === 200 && (
             <div className="gap-5  h-full  rounded-2xl w-full z-10 grid grid-rows-2 lg:grid-cols-2 p-5 fade-in overflow-auto">
@@ -295,13 +309,7 @@ type PersonWithName = {
         }
         {
           wich === "2" && er === 200 && (
-            
             <div className="gap-5  h-full  rounded-2xl w-full z-10 grid grid-rows-2 lg:grid-cols-2 p-5 fade-in">
-              <div className="mt-10 mx-auto w-full max-w-md p-6 bg-white/30 backdrop-blur-md rounded-xl shadow-md">
-          <h2 className="text-xl font-bold text-gray-800">คะเเนน</h2>
-          <p className="mt-2 text-gray-600">สอบรอบนี้คะเเนนเต็ม {ximax} คะเเนน!!</p>
-          
-        </div>
         <div className="mt-10 mx-auto w-full max-w-md p-6 bg-white/30 backdrop-blur-md rounded-xl shadow-md">
           <h2 className="text-xl font-bold text-gray-800">คะเเนน</h2>
           <p className="mt-2 text-gray-600">คะเเนนรอบนี้คุณได้ {Xi} คะเเนน!!</p>
@@ -337,7 +345,7 @@ type PersonWithName = {
       <div>
         <div className="text-center mt-12 mb-4">
             <h2 className="text-3xl font-bold text-purple-600 inline-flex items-center gap-2">
-              คะเเนนสอบ {trysubject} ของห้อง {cl} รอบที่ {triestimes} คะเเนนเต็ม {ximax}
+              คะเเนนสอบ {trysubject} ของห้อง {cl} รอบที่ {wich1} คะเเนนเต็ม {ximax}
             </h2>
           </div>
         <div className="mb-4">
@@ -407,7 +415,7 @@ type PersonWithName = {
             <div>
               <div className="text-center mt-12 mb-4 justify-center items-center flex flex-col gap-4">
                 <h2 className="text-3xl font-bold text-purple-600 inline-flex items-center gap-2">
-                  คะเเนนสอบ {trysubject} ของห้อง {cl} รอบที่ {triestimes} คะเเนนเต็ม {ximax} 
+                  คะเเนนสอบ {trysubject} ของห้อง {cl} รอบที่ {wich1} คะเเนนเต็ม {ximax} 
                 </h2><select
                   id="fruit"
                   value={Subject}
@@ -432,7 +440,7 @@ type PersonWithName = {
                   <p className="text-gray-700">🆔 ID: {key}</p>
                   <p className="text-gray-700">🏆 ห้อง: {data.clas}</p>
                   <p className="text-gray-700">🏅 อันดับ: {data.rank}</p>
-                  <p className="text-gray-700">📊 คะแนน xi: {data.xi} / {ximax}</p>
+                  <p className="text-gray-700">📊 คะแนน xi: {data.xi}</p>
                   <p className="text-gray-700">📈 เปอร์เซ็นไทล์: {data.percentile}%</p>
                   <p className="text-gray-700">📉 Z-Score: {data.zscore}</p>
                 </div>
@@ -508,7 +516,23 @@ type PersonWithName = {
           </p>
           </div>
       </div>
-      
+      {showPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg relative max-w-lg w-full">
+            <button
+              onClick={()=>setShowPopup(false)}
+              className="absolute top-2 right-2 text-gray-600 hover:text-black"
+            >
+              ✕
+            </button>
+            <div className="flex flex-wrap gap-4 mt-6">
+              {su.map((val, index) => {
+            return <CustomButton label={val} variant="solid" onClick={() => send(val)} now={wich1} target={val} key={index}/>;
+          })}
+            </div>
+          </div>
+    </div>
+      )}
     </div>
   );
 }
