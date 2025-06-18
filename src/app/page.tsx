@@ -475,6 +475,14 @@ const send1 = async () => {
             <p className="mt-2 text-gray-600">Lets do it, TB 18</p>
           </div>
             </div>
+            <div className="rounded-xl flex flex-col w-full h-full lg:p-5 border border-gray-300 overflow-auto">
+              <div className="w-full max-w-md p-6 bg-white/30 backdrop-blur-md rounded-xl shadow-md">
+            <h2 className="text-xl font-bold text-gray-800">วันที่ 18 มิถุนายน 2568</h2>
+            <p className="mt-2 text-gray-600">เพิ่มวิชาใน option:tgat1,tgat2,tgat3,total tgat,tpat1,tpat2,tpat3,tpat4,tpat5
+            </p>
+            
+          </div>
+            </div>
         </div>
         )}
         <div className="gap-5  h-full  rounded-2xl w-full z-10 flex p-5 fade-in ">
