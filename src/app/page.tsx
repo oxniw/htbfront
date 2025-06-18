@@ -35,7 +35,6 @@ export default function Home() {
   const [wich, setWhich] = useState("5");
   const [wich1, setWhich1] = useState("");
   const [ximax, setXimax] = useState("")
-  const [triestimes , settriestimes] = useState("")
   const  [trysubject , setTrysubject]= useState("")
   const [cl , setcl] = useState("")
   const [zoom, setZoom] = useState<number>(1);
@@ -44,6 +43,12 @@ export default function Home() {
   const [ppl, setppl] = useState([]);
   const [su , setsu] = useState([]);
   const [whyclickhere,setwhyclickhere] = useState(0)
+  const [setv , setSetv] = useState("");
+  const [whatismyid, setWhatismyID] = useState("");
+  const clickhere = () => {
+    setShowPopup(true);
+    setSetv("v")
+  }
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSubject(e.target.value);
   };
@@ -133,6 +138,7 @@ type PersonWithName = {
       setTrysubject(subject)
       setcl(res.data.cl)
       setppl(res.data.all)
+      setWhatismyID(id)
       console.log(res.data.all)
       setcount(res.data.totals["count"])
       console.log(ppl)
@@ -171,6 +177,13 @@ const send1 = async () => {
     if (res.status === 200) {
       setsu(res.data.data)
       setwhyclickhere(res.status)
+      setWhich1("")
+      if (id !== whatismyid) {
+        setWhatismyID("")
+        setSetv("")
+        seter(0)
+      }
+      
     } } catch (error) {
     if (axios.isAxiosError(error)) {
     if (error.response) {
@@ -256,12 +269,15 @@ const send1 = async () => {
               <Xianimation/>
             </button>
             <hr className="my-10 border-0 h-[2px] bg-gradient-to-r from-purple-300 via-purple-400 to-purple-300 rounded-full" />
-            <div className="text-center mt-12 mb-4">
-            <h2 className="text-3xl font-bold text-purple-600 inline-flex items-center gap-2">
+            <div className="text-center mt-12 mb-4 flex flex-col gap-4 content-center justify-center">
+            <h2 className="text-3xl font-bold text-purple-600 inline-flex items-center gap-2 content-center justify-center">
               <svg className="w-7 h-7 text-purple-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M11 17a1 1 0 01-1-1v-6a1 1 0 012 0v6a1 1 0 01-1 1zm4 0a1 1 0 01-1-1v-4a1 1 0 012 0v4a1 1 0 01-1 1zm-8 0a1 1 0 01-1-1v-2a1 1 0 012 0v2a1 1 0 01-1 1z" />
               </svg>
               Stats Section
+            </h2>
+            <h2 className="text-3xl font-bold text-purple-600 inline-flex items-center gap-2 content-center justify-center">
+              {whatismyid}
             </h2>
           </div>
           <CustomButton label="Update log" variant="solid" onClick={() => setWhich("5")} now={wich} target="5" />
@@ -272,7 +288,8 @@ const send1 = async () => {
             
             {whyclickhere === 200 &&(
               <div className="mt-12 mb-4 overflow-auto w-1/2 lg:w-full">
-            <CustomButton label={"Cilck here เพื่อเลือกครั้งที่สอบ"} variant="solid" onClick={() => setShowPopup(true)}/>
+                
+            <CustomButton label={"Cilck here เพื่อเลือกครั้งที่สอบ"} variant="solid" onClick={clickhere} target="v" now={setv}/>
           </div>
             )
             }
@@ -474,14 +491,15 @@ const send1 = async () => {
             <h2 className="text-xl font-bold text-gray-800">วันที่ 4 มิถุนายน 2568</h2>
             <p className="mt-2 text-gray-600">Lets do it, TB 18</p>
           </div>
-            </div>
-            <div className="rounded-xl flex flex-col w-full h-full lg:p-5 border border-gray-300 overflow-auto">
+          <div className="rounded-xl flex flex-col w-full h-full lg:p-5 border border-gray-300 overflow-auto">
               <div className="w-full max-w-md p-6 bg-white/30 backdrop-blur-md rounded-xl shadow-md">
             <h2 className="text-xl font-bold text-gray-800">วันที่ 18 มิถุนายน 2568</h2>
-            <p className="mt-2 text-gray-600">เพิ่มวิชาใน option:tgat1,tgat2,tgat3,total tgat,tpat1,tpat2,tpat3,tpat4,tpat5
+            <p className="mt-2 text-gray-600">ทำให้ดูคะเเนนคนอื่นได้เเละเพิ่มวิชาใน option:tgat1,tgat2,tgat3,total tgat,tpat1,tpat2,tpat3,tpat4,tpat5
             </p>
             
           </div>
+            </div>
+
             </div>
         </div>
         )}
