@@ -236,6 +236,15 @@ const send1 = async () => {
                 <option value="physics">physics</option>
                 <option value="soc">soc</option>
                 <option value="eng">eng</option>
+                <option value="tgat1">tgat1</option>
+                <option value="tgat2">tgat2</option>
+                <option value="tgat3">tgat3</option>
+                <option value="total tgat">total tgat</option>
+                <option value="tpat1">tpat1</option>
+                <option value="tpat2">tpat2</option>
+                <option value="tpat3">tpat3</option>
+                <option value="tpat4">tpat4</option>
+                <option value="tpat5">tpat5</option>
               </select>
             </div>
         </div>
