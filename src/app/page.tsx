@@ -240,9 +240,9 @@ const send1 = async () => {
               </div>
               <select id="fruit" value={Subject} onChange={handleChange} className="text-center flex border-2 hover:border-slate-950 bg-slate-300 rounded-xl h-16 pl-4 pt-6 w-full transition duration-300">
                 <option value="">--Subject--</option>
-                <option value="math 1">math 1</option>
-                <option value="math 2">math 2</option>
-                <option value="normal sci">normal sci</option>
+                <option value="math 1">math1</option>
+                <option value="math 2">math2</option>
+                <option value="normal sci">normalsci</option>
                 <option value="bio">bio</option>
                 <option value="chem">chem</option>
                 <option value="thai">thai</option>
@@ -252,7 +252,7 @@ const send1 = async () => {
                 <option value="tgat1">tgat1</option>
                 <option value="tgat2">tgat2</option>
                 <option value="tgat3">tgat3</option>
-                <option value="total tgat">total tgat</option>
+                <option value="total tgat">totaltgat</option>
                 <option value="tpat1">tpat1</option>
                 <option value="tpat2">tpat2</option>
                 <option value="tpat3">tpat3</option>
