@@ -236,7 +236,6 @@ const send1 = async () => {
           </div>
           <div className="relative flex h-16 w-full">
               <div className="absolute p-3 text-sm">
-                Subject
               </div>
               <select id="fruit" value={Subject} onChange={handleChange} className="text-center flex border-2 hover:border-slate-950 bg-slate-300 rounded-xl h-16 pl-4 pt-6 w-full transition duration-300">
                 <option value="">--Subject--</option>
