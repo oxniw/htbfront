@@ -280,7 +280,7 @@ const send1 = async () => {
             </h2>
           </div>
           <CustomButton label="Update log" variant="solid" onClick={() => setWhich("5")} now={wich} target="5" />
-          <CustomButton label="Point" variant="solid" onClick={() => setWhich("2")} now={wich} target="2" />
+          <CustomButton label="คะเเนน" variant="solid" onClick={() => setWhich("2")} now={wich} target="2" />
           <CustomButton label="Graph" variant="solid" onClick={() => setWhich("1")} now={wich} target="1"/>
           <CustomButton label="Total" variant="solid" onClick={() => setWhich("3")} now={wich} target="3"/>
           <CustomButton label="Board" variant="solid" onClick={() => setWhich("4")} now={wich} target="4"/>
